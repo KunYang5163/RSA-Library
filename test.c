@@ -3,6 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+void func()
+{
+	static int key = 0x22334455;
+}
+
 int main(int argc, char **argv)
 {
   struct public_key_class pub[1];
@@ -12,7 +17,7 @@ int main(int argc, char **argv)
   printf("Private Key:\n Modulus: %lld\n Exponent: %lld\n", (long long)priv->modulus, (long long) priv->exponent);
   printf("Public Key:\n Modulus: %lld\n Exponent: %lld\n", (long long)pub->modulus, (long long) pub->exponent);
   
-  char message[] = "123abc";
+  char message[] = {'B', '6', '2', '1', '4', '0', '8', '0'};
   int i;
 
   printf("Original:\n");
@@ -27,7 +32,7 @@ int main(int argc, char **argv)
   }
   printf("Encrypted:\n");
   for(i=0; i < strlen(message); i++){
-    printf("%lld\n", (long long)encrypted[i]);
+    printf("%x\n", (long long)encrypted[i]);
   }  
   
   char *decrypted = rsa_decrypt(encrypted, 8*sizeof(message), priv);
